@@ -1,0 +1,22 @@
+type User {
+  id: ID
+  name: String
+}
+
+type Tag {
+  id: ID
+  value: String
+  label: String
+}
+
+type Todo {
+  id: ID
+  user: User
+  content: String
+  timestamp: Int
+  tags: [Tag]
+}
+
+type Query {
+  hello: String!
+}
