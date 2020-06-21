@@ -1,31 +1,21 @@
-import { addResolversToSchema } from '@graphql-tools/schema'
-import express from 'express'
-import graphqlHTTP from 'express-graphql'
-import schema from './schema'
-import { } from 'graphql-tools'
+import "reflect-metadata";
+import {createConnection} from "typeorm";
+import {User} from "./entity/User";
 
-const hello = (...args) => {
-  console.log({ ...args })
+createConnection().then(async connection => {
 
-  return 'nice'
-}
-// Write some resolvers
-const resolvers = {
-  Query: {
-    hello
-  }
-}
+    console.log("Inserting a new user into the database...");
+    const user = new User();
+    user.firstName = "Timber";
+    user.lastName = "Saw";
+    user.age = 25;
+    await connection.manager.save(user);
+    console.log("Saved a new user with id: " + user.id);
 
-const app = express()
+    console.log("Loading users from the database...");
+    const users = await connection.manager.find(User);
+    console.log("Loaded users: ", users);
 
-app.use(
-  graphqlHTTP({
-    // Add resolvers to the schema
-    schema: addResolversToSchema({ schema, resolvers }),
-    graphiql: true
-  })
-)
+    console.log("Here you can setup and run express/koa/any other framework.");
 
-app.listen(4000, () => {
-  console.info('Server listening on http://localhost:4000')
-})
+}).catch(error => console.log(error));
