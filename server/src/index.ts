@@ -5,7 +5,7 @@ import graphqlHTTP from 'express-graphql'
 import schema from './schema'
 import { } from 'graphql-tools'
 
-const hello = (...args) => {
+const hello = (...args: any[]) => {
   console.log({ ...args })
 
   return 'nice'
