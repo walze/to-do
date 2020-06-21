@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { addResolversToSchema } from '@graphql-tools/schema'
 import express from 'express'
 import graphqlHTTP from 'express-graphql'

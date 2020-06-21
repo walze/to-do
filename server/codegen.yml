@@ -8,6 +8,6 @@ generates:
       - "typescript-resolvers"
       - "typescript-mongodb"
       - "typescript-document-nodes"
-  ./graphql.schema.json:
+  ./src/generated/graphql.schema.json:
     plugins:
       - "introspection"
