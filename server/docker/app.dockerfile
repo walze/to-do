@@ -11,6 +11,7 @@ WORKDIR /app
 COPY . .
 
 RUN npm i
+RUN npm run gen
 
 EXPOSE 4000
 

@@ -1,5 +1,5 @@
 overwrite: true
-schema: http://localhost:4000
+schema: ./src/schema.gql
 # documents: ./src/schema.gql
 generates:
   ./src/generated/graphql.d.ts:
@@ -10,7 +10,7 @@ generates:
       - typescript-document-nodes
       - typescript-graphql-request
     config:
-      useIndexSignature: true  
+      useIndexSignature: true
 
   ./src/generated/graphql.schema.json:
     plugins:

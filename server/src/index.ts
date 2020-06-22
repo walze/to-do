@@ -1,21 +1,23 @@
 import "reflect-metadata";
+
 import { addResolversToSchema } from '@graphql-tools/schema'
 import express from 'express'
 import graphqlHTTP from 'express-graphql'
 import schema from './schema'
-import { } from 'graphql-tools'
 
-import {Resolvers} from 'src/generated/graphql'
+import { Resolvers, User as UserQL } from './generated/graphql'
+import { User } from './models/User';
 
-const addUser  = (a,b,c,d) => {
-
-  return { id: Math.random() + '', name: 'lol' }
-}
 
 const resolvers: Resolvers = {
   Query: {
-    addUser,
-    hello: addUser
+    addUser: (_, { user }) => {
+      const nuser = new User()
+      nuser.name = user?.name
+      nuser.save()
+
+      return nuser as unknown as UserQL
+    },
   }
 }
 

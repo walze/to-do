@@ -6,7 +6,7 @@
    "scripts": {
       "dev": "nodemon src/index.ts",
       "prebuild": "rimraf dist",
-      "build": "sucrase ./src -d ./dist --transforms typescript,imports",
+      "build": "ts-node ./src -d ./dist --transforms typescript,imports",
       "gen": "graphql-codegen --config codegen.yml",
       "start": "ts-node src/index.ts",
       "typeorm": "ts-node ./node_modules/.bin/typeorm"
@@ -38,7 +38,6 @@
       "nodemon": "^2.0.4",
       "reflect-metadata": "^0.1.13",
       "rimraf": "^3.0.2",
-      "sucrase": "^3.15.0",
       "ts-node": "^8.10.2",
       "typeorm": "0.2.25",
       "typescript": "^3.9.5"
