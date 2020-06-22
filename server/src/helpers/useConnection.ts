@@ -11,9 +11,9 @@ export const useConnection = async <T>(
   return conn
     .then(c => Promise.all(pair(c, fn(c))))
     .then(([c, r]) => c.close().then(() => r))
-    .catch(() => conn.then(c => {
+    .catch((err) => conn.then(c => {
       c.close()
 
-      return null
+      throw err
     }))
 }
