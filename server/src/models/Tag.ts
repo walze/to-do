@@ -1,15 +1,14 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
-import {Tag as U} from '../generated/graphql'
 
 @Entity()
 export class Tag extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    id?: U['id'];
+    id?: number;
 
     @Column()
-    value?: U['value'];
+    value?: string;
 
     @Column()
-    label?: U['label'];
+    label?: string;
 }

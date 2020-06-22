@@ -5,15 +5,17 @@ import graphqlHTTP from 'express-graphql'
 import schema from './schema'
 import { } from 'graphql-tools'
 
-const hello = (...args: any[]) => {
-  console.log({ ...args })
+import {Resolvers} from 'src/generated/graphql'
 
-  return 'nice'
+const addUser  = (a,b,c,d) => {
+
+  return { id: Math.random() + '', name: 'lol' }
 }
-// Write some resolvers
-const resolvers = {
+
+const resolvers: Resolvers = {
   Query: {
-    hello
+    addUser,
+    hello: addUser
   }
 }
 

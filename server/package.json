@@ -8,13 +8,15 @@
       "prebuild": "rimraf dist",
       "build": "sucrase ./src -d ./dist --transforms typescript,imports",
       "gen": "graphql-codegen --config codegen.yml",
-      "start": "ts-node src/index.ts"
+      "start": "ts-node src/index.ts",
+      "typeorm": "ts-node ./node_modules/.bin/typeorm"
    },
    "dependencies": {
       "@graphql-codegen/cli": "1.15.4",
       "@graphql-codegen/introspection": "1.15.4",
-      "@graphql-codegen/typescript": "1.15.4",
+      "@graphql-codegen/typescript": "^1.15.4",
       "@graphql-codegen/typescript-document-nodes": "1.15.4",
+      "@graphql-codegen/typescript-graphql-request": "^1.15.4",
       "@graphql-codegen/typescript-mongodb": "1.15.4",
       "@graphql-codegen/typescript-resolvers": "1.15.4",
       "@types/node": "^14.0.13",

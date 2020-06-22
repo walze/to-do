@@ -1,12 +1,17 @@
 FROM node:latest
 
+ARG environment
+ARG script
+
+ENV environment ${environment}
+ENV script ${script}
+
 WORKDIR /app
 
 COPY . .
 
 RUN npm i
-RUN npm run build
 
 EXPOSE 4000
 
-CMD [ "npm", "start" ]
+CMD npm run ${script} --NODE_ENV=${environment}

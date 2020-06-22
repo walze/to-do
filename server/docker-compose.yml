@@ -6,6 +6,9 @@ services:
     build:
       context: ./
       dockerfile: ./docker/app.dockerfile
+      args:
+        environment: development
+        script: dev
     ports:
       - "4000:4000"
     volumes:
@@ -16,6 +19,7 @@ services:
   db:
     restart: always
     image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
       MYSQL_DATABASE: 'database'

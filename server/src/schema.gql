@@ -3,6 +3,12 @@ type User {
   name: String!
 }
 
+input UserInput {
+  name: String!
+}
+
+
+
 type Tag {
   id: ID!
   value: String!
@@ -18,5 +24,6 @@ type Todo {
 }
 
 type Query {
-  hello(id: ID): String
+  hello(id: ID): User
+  addUser(user: UserInput): User
 }

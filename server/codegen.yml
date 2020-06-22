@@ -1,13 +1,17 @@
 overwrite: true
-schema: "http://localhost:4000"
-documents: null
+schema: http://localhost:4000
+# documents: ./src/schema.gql
 generates:
-  src/generated/graphql.ts:
+  ./src/generated/graphql.d.ts:
     plugins:
-      - "typescript"
-      - "typescript-resolvers"
-      - "typescript-mongodb"
-      - "typescript-document-nodes"
+      - typescript
+      - typescript-resolvers
+      - typescript-mongodb
+      - typescript-document-nodes
+      - typescript-graphql-request
+    config:
+      useIndexSignature: true  
+
   ./src/generated/graphql.schema.json:
     plugins:
-      - "introspection"
+      - introspection

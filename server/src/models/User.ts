@@ -1,12 +1,11 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
-import {User as U} from 'src/generated/graphql'
 
 @Entity()
 export class User extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    id?: U['id'];
+    id?: number;
 
-    @Column()
-    name?: U['name'];
+    @Column({ unique: true })
+    name?: string;
 }

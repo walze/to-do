@@ -1,5 +1,4 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, JoinColumn, OneToMany} from "typeorm";
-import {Todo as U} from '../generated/graphql'
 
 import { User } from './User';
 import { Tag } from './Tag';
@@ -8,10 +7,10 @@ import { Tag } from './Tag';
 export class Todo extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    id?: U['id'];
+    id?: number;
 
     @Column()
-    content?: U['content'];
+    content?: string;
 
     @OneToMany(() => Tag, tag => tag.id)
     tags?: Tag[];
