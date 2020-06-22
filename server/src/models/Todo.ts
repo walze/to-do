@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, JoinColumn, OneToMany } from 'typeorm'
 
 import { User } from './User'
@@ -15,7 +17,10 @@ export class Todo extends BaseEntity {
     tags!: Tag[];
 
     @Column()
-    timestamp!: Date;
+    created_at!: Date;
+
+    @Column()
+    updated_at!: Date;
 
     @OneToOne(() => User)
     @JoinColumn()
