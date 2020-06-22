@@ -5,19 +5,21 @@ import express from 'express'
 import graphqlHTTP from 'express-graphql'
 import schema from './schema'
 
-import { Resolvers, User as UserQL } from './generated/graphql'
+import { Resolvers } from './generated/graphql'
 import { User } from './models/User';
-
+import { useConnection } from './helpers/useConnection';
 
 const resolvers: Resolvers = {
   Query: {
-    addUser: (_, { user }) => {
+    addUser: (_, { user }) => useConnection(async (conn) => {
       const nuser = new User()
       nuser.name = user?.name
-      nuser.save()
 
-      return nuser as unknown as UserQL
-    },
+      await conn.manager.save(nuser)
+
+      // return nuser as unknown as UserQL
+      return { id: nuser.id + '' || 'none', name: nuser.name || 'no name' }
+    }),
   }
 }
 

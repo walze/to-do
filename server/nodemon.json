@@ -1,7 +1,7 @@
 {
   "watch": ["src/*"],
   "execMap": {
-    "ts": "ts-node src/index.ts"
+    "ts": "ts-node src/index.ts --log-error"
   },
   "ext": "ts"
 }
