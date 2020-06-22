@@ -1,6 +1,6 @@
 {
     "overrides": [{
-        "files":[],
+        "files": "./src/*",
         "excludedFiles": [
             "./src/generated"
         ]
@@ -10,6 +10,7 @@
         "node": true
     },
     "extends": [
+        "eslint:recommended",
         "standard"
     ],
     "parser": "@typescript-eslint/parser",
@@ -21,5 +22,6 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "no-unused-vars": "off"
     }
 }

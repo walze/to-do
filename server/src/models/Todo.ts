@@ -1,11 +1,10 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, JoinColumn, OneToMany} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, JoinColumn, OneToMany } from 'typeorm'
 
-import { User } from './User';
-import { Tag } from './Tag';
+import { User } from './User'
+import { Tag } from './Tag'
 
 @Entity()
 export class Todo extends BaseEntity {
-
     @PrimaryGeneratedColumn()
     id!: number;
 
