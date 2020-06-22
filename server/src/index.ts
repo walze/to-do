@@ -6,11 +6,21 @@ import graphqlHTTP from 'express-graphql'
 import schema from './schema'
 
 import { Resolvers } from './generated/graphql'
+
 import { addUser } from './resolvers/addUser'
+import { addTodo } from './resolvers/addTodo'
+import { addTag } from './resolvers/addTag'
+import { User } from './models/User'
+import { useConnection } from './helpers/useConnection'
 
 const resolvers: Resolvers = {
   Query: {
-    addUser
+    addUser,
+    addTodo,
+    addTag,
+    hello: () => useConnection(() => User
+      .findOne({ where: { name: 'wivaer' } })
+      .then(r => { console.log(r); return r })) as any
   }
 }
 

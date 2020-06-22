@@ -34,8 +34,8 @@ type Todo {
 input TodoInput {
   user: UserInput!
   content: String!
-  created_at: Int!
-  updated_at: Int!
+  created_at: Int
+  updated_at: Int
   tags: [TagInput]
 }
 
@@ -43,5 +43,5 @@ type Query {
   hello(id: ID): User
   addUser(data: UserInput): User
   addTag(data: TagInput): Tag
-  addTodo(data: TodoInput): Todo
+  addTodo(data: TodoInput): User
 }

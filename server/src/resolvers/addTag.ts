@@ -2,7 +2,7 @@ import { useConnection } from '../helpers/useConnection'
 
 import assert from 'assert'
 import { QueryResolvers } from 'app/generated/graphql'
-import { Tag } from 'app/models/Tag'
+import { Tag } from '../models/Tag'
 
 export const addTag: QueryResolvers['addTag'] = (_, { data }) => useConnection(async (conn) => {
   assert(data, 'no data provided')
