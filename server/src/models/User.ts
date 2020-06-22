@@ -4,8 +4,8 @@ import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
 export class User extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    id?: number;
+    id!: number;
 
     @Column({ unique: true })
-    name?: string;
+    name!: string;
 }

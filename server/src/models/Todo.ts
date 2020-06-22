@@ -7,18 +7,18 @@ import { Tag } from './Tag';
 export class Todo extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    id?: number;
+    id!: number;
 
     @Column()
-    content?: string;
+    content!: string;
 
     @OneToMany(() => Tag, tag => tag.id)
-    tags?: Tag[];
+    tags!: Tag[];
 
     @Column()
-    timestamp?: Date;
+    timestamp!: Date;
 
     @OneToOne(() => User)
     @JoinColumn()
-    user?: User;
+    user!: User;
 }

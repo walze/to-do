@@ -4,11 +4,11 @@ import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
 export class Tag extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    id?: number;
+    id!: number;
 
     @Column()
-    value?: string;
+    value!: string;
 
     @Column()
-    label?: string;
+    label!: string;
 }

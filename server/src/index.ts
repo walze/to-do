@@ -13,12 +13,9 @@ const resolvers: Resolvers = {
   Query: {
     addUser: (_, { user }) => useConnection(async (conn) => {
       const nuser = new User()
-      nuser.name = user?.name
+      nuser.name = user!.name
 
-      await conn.manager.save(nuser)
-
-      // return nuser as unknown as UserQL
-      return { id: nuser.id + '' || 'none', name: nuser.name || 'no name' }
+      return conn.manager.save(nuser)
     }),
   }
 }
@@ -27,7 +24,6 @@ const app = express()
 
 app.use(
   graphqlHTTP({
-    // Add resolvers to the schema
     schema: addResolversToSchema({ schema, resolvers }),
     graphiql: true
   })

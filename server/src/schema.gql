@@ -1,5 +1,5 @@
 type User {
-  id: ID!
+  id: Int!
   name: String!
 }
 
@@ -10,13 +10,13 @@ input UserInput {
 
 
 type Tag {
-  id: ID!
+  id: Int!
   value: String!
   label: String!
 }
 
 type Todo {
-  id: ID!
+  id: Int!
   user: User!
   content: String!
   timestamp: Int!
