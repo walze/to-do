@@ -10,8 +10,11 @@ import {
   OneToMany,
 } from 'typeorm';
 
-import {User} from './User';
+import {User, addUser} from './User';
 import {Tag} from './Tag';
+import {pipe, andThen} from 'ramda';
+import {saveEntity} from 'app/helpers/saveEntity';
+import {TodoInput} from 'app/generated/graphql';
 
 @Entity()
 export class Todo extends BaseEntity {
@@ -34,3 +37,19 @@ export class Todo extends BaseEntity {
     @JoinColumn()
     user!: User;
 }
+
+
+export const addTodo = pipe(
+    async ({content, user: {name}}: TodoInput) => {
+      const ntodo = new Todo();
+      const user = await User.findOne({where: {name}}) || await addUser({name});
+
+      ntodo.user = user;
+      ntodo.content = content;
+      ntodo.created_at = new Date();
+      ntodo.updated_at = new Date();
+
+      return ntodo;
+    },
+    andThen(saveEntity),
+);
