@@ -1,19 +1,14 @@
 import {createConnection, Connection} from 'typeorm';
 
 import {pair} from 'ramda';
+import {snd, mapLeft} from './pairBifunctor';
 
-export const useConnection = async <T>(
-  fn: (c: Connection) => Promise<T>,
+export const useConnection = <A, B>(
+  f: (conn: Connection) => (a: A) => B | Promise<B>,
   getConnection = createConnection,
-) => {
-  const conn = getConnection();
-
-  return conn
-      .then((c) => Promise.all(pair(c, fn(c))))
-      .then(([c, r]) => c.close().then(() => r))
-      .catch((err) => conn.then((c) => {
-        c.close();
-
-        throw err;
-      }));
-};
+) => async (a: A): Promise<B> =>
+    getConnection()
+        .then((c) => pair(c, f(c)(a)))
+        .then((p) => Promise.all(p))
+        .then((p) => mapLeft(p, (c) => c.close()))
+        .then(snd);

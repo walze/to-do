@@ -1,18 +1,13 @@
-import {useConnection} from '../helpers/useConnection';
-
 import assert from 'assert';
 import {QueryResolvers} from 'app/generated/graphql';
-import {Tag} from '../models/Tag';
 
-export const addTag: QueryResolvers['addTag'] = (_, {data}) => useConnection(
-    async (conn) => {
-      assert(data, 'no data provided');
-      assert(data.label, 'no label provided');
-      assert(data.value, 'no value provided');
+import {addTag as addTagDB} from 'app/models/Tag';
+import {useConnection} from 'app/helpers/useConnection';
 
-      const ntag = new Tag();
-      ntag.label = data.label;
-      ntag.value = data.value;
+export const addTag: QueryResolvers['addTag'] = async (_, {data}) => {
+  assert(data, 'no data provided');
+  assert(data.label, 'no label provided');
+  assert(data.value, 'no value provided');
 
-      return conn.manager.save(ntag);
-    });
+  return useConnection(addTagDB)(data);
+};

@@ -1,4 +1,9 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  Connection} from 'typeorm';
 
 import {pipe} from 'ramda';
 import {saveEntity} from 'app/helpers/saveEntity';
@@ -12,12 +17,12 @@ export class User extends BaseEntity {
     name!: string;
 }
 
-export const addUser = pipe(
+export const addUser = (conn: Connection) => pipe(
     ({name}: UserInput) => {
       const nuser = new User();
       nuser.name = name;
 
       return nuser;
     },
-    saveEntity,
+    saveEntity(conn),
 );

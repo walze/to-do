@@ -17,7 +17,14 @@ class PairBifunctor implements Bifunctor2<URI> {
 
   bimap = PairBifunctor.bimap
   mapLeft = PairBifunctor.mapLeft
-  mapRight = PairBifunctor.mapRight
+
+  static fst: <E, A>(
+    fea: Pair<E, A>
+  ) => E = ([e]) => e;
+
+  static snd: <E, A>(
+    fea: Pair<E, A>
+  ) => A = ([, a]) => a;
 
   static mapLeft: <E, A, G>(
     fea: Pair<E, A>,
@@ -44,4 +51,6 @@ export const {
   bimap,
   mapLeft,
   mapRight,
-} = new PairBifunctor();
+  fst,
+  snd,
+} = PairBifunctor;

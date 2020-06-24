@@ -18,11 +18,9 @@ const resolvers: Resolvers = {
     addUser,
     addTodo,
     addTag,
-    hello: () => useConnection(() => User
-        .findOne({where: {name: 'wivaer'}})
-        .then((r) => {
-          console.log(r); return r;
-        })) as any,
+    hello: useConnection(
+        () => () => User.findOne({where: {name: 'wivaer'}}),
+    ),
   },
 };
 

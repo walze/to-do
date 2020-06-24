@@ -8,6 +8,7 @@ import {
   OneToOne,
   JoinColumn,
   OneToMany,
+  Connection,
 } from 'typeorm';
 
 import {User, addUser} from './User';
@@ -39,10 +40,13 @@ export class Todo extends BaseEntity {
 }
 
 
-export const addTodo = pipe(
+export const addTodo = (conn: Connection) => pipe(
     async ({content, user: {name}}: TodoInput) => {
       const ntodo = new Todo();
-      const user = await User.findOne({where: {name}}) || await addUser({name});
+      const user = await User
+          .findOne({
+            where: {name},
+          }) || await addUser(conn)({name});
 
       ntodo.user = user;
       ntodo.content = content;
@@ -51,5 +55,5 @@ export const addTodo = pipe(
 
       return ntodo;
     },
-    andThen(saveEntity),
+    andThen(saveEntity(conn)),
 );

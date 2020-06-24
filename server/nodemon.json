@@ -1,7 +1,8 @@
 {
+  "verbose": true,
   "watch": ["src/*"],
   "execMap": {
-    "ts": "ts-node src/index.ts --log-error",
+    "ts": "npm run dev:start",
     "gql": "npm run gen"
   },
   "ext": "ts"
