@@ -1,3 +1,4 @@
+# USER
 type User {
   id: Int!
   name: String!
@@ -7,9 +8,11 @@ input UserInput {
   id: Int
   name: String!
 }
+# END USER
 
 
 
+# TAG
 type Tag {
   id: Int!
   value: String!
@@ -21,7 +24,11 @@ input TagInput {
   value: String!
   label: String!
 }
+# END TAG
 
+
+
+# TODO
 type Todo {
   id: Int!
   user: User!
@@ -31,17 +38,32 @@ type Todo {
   tags: [Tag]!
 }
 
-input TodoInput {
+input NewTodoInput {
   user: UserInput!
   content: String!
-  created_at: String
-  updated_at: String
   tags: [TagInput!]
 }
 
+input EditTodoInput {
+  id: Int!
+  content: String!
+  tags: [TagInput!]
+}
+
+input DeleteTodoInput {
+  id: Int!
+}
+# END TODO
+
+
+
 type Query {
   hello(id: ID): User
-  addUser(data: UserInput): User
-  addTag(data: TagInput): Tag
-  addTodo(data: TodoInput): Todo
+
+  addUser(data: UserInput!): User
+  addTag(data: TagInput!): Tag
+
+  addTodo(data: NewTodoInput!): Todo
+  editTodo(data: EditTodoInput!): Todo
+  deleteTodo(data: DeleteTodoInput!): Boolean!
 }

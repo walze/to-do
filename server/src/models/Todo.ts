@@ -5,9 +5,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  OneToMany,
   Connection,
-  ManyToOne
+  ManyToOne,
+  ManyToMany,
+  JoinTable
 } from 'typeorm'
 
 import { User, addUser } from './User'
@@ -24,8 +25,9 @@ export class Todo extends BaseEntity {
     @Column()
     content!: string;
 
-    @OneToMany(() => Tag, (tag) => tag.id)
-    tags!: Array<Tag | null | undefined>;
+    @ManyToMany(() => Tag, (tag) => tag.id)
+    @JoinTable()
+    tags!: Tag[];
 
     @Column()
     created_at!: Date;
