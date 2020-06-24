@@ -9,6 +9,8 @@ import { Resolvers } from './generated/graphql'
 
 import { addUser } from './resolvers/addUser'
 import { addTodo } from './resolvers/addTodo'
+import { editTodo } from './resolvers/editTodo'
+import { deleteTodo } from './resolvers/deleteTodo'
 import { addTag } from './resolvers/addTag'
 import { User } from './models/User'
 import { useConnection } from './helpers/useConnection'
@@ -18,6 +20,8 @@ const resolvers: Resolvers = {
     addUser,
     addTodo,
     addTag,
+    editTodo,
+    deleteTodo,
     hello: useConnection(() => () => User.findOne({ where: { name: 'wivaer' } }) as Promise<User>)
   }
 }

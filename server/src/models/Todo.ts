@@ -15,7 +15,8 @@ import { User, addUser } from './User'
 import { Tag } from './Tag'
 import { pipe, andThen } from 'ramda'
 import { saveEntity } from 'app/helpers/saveEntity'
-import { TodoInput } from 'app/generated/graphql'
+import { NewTodoInput, EditTodoInput, DeleteTodoInput } from 'app/generated/graphql'
+import assert from 'assert'
 
 @Entity()
 export class Todo extends BaseEntity {
@@ -40,7 +41,7 @@ export class Todo extends BaseEntity {
 }
 
 export const addTodo = (conn: Connection) => pipe(
-  async ({ content, user: { name }, tags: tagsInput }: TodoInput) => {
+  async ({ content, user: { name }, tags: tagsInput }: NewTodoInput) => {
     const ntodo = new Todo()
     const tags = tagsInput && await Tag.find({ where: tagsInput })
     const user = await User
@@ -54,6 +55,31 @@ export const addTodo = (conn: Connection) => pipe(
     ntodo.tags = tags || []
 
     return ntodo
+  },
+  andThen(saveEntity(conn))
+)
+
+export const editTodo = (conn: Connection) => pipe(
+  async ({ content, id, tags: tagsInput }: EditTodoInput) => {
+    const todo = await Todo.findOne(id)
+    assert(todo, 'todo not found')
+
+    const tags = tagsInput && await Tag.find({ where: tagsInput })
+
+    todo.content = content
+    todo.updated_at = (new Date()).toISOString() as unknown as Date
+    todo.tags = tags || []
+
+    return todo
+  },
+  andThen(saveEntity(conn))
+)
+
+export const deleteTodo = (conn: Connection) => pipe(
+  async ({ id }: DeleteTodoInput) => {
+    const todo = await Todo.delete(id)
+
+    return Number(todo.affected) > 0
   },
   andThen(saveEntity(conn))
 )

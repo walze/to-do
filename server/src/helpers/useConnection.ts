@@ -13,10 +13,10 @@ export const useConnection = <A, B>(
       .then((c) => pair(c, f(c)(a)))
       .then((p) => Promise.all(p))
       .then((p) => mapLeft(p, (c) => c.close()))
-      .catch(async (p) => {
+      .then(snd)
+      .catch(async (error) => {
         (await conn).close()
 
-        throw p
+        throw error
       })
-      .then(snd)
   }
