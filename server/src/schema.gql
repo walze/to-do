@@ -58,11 +58,18 @@ input DeleteTodoInput {
 
 
 type Query {
-  hello(id: ID): User
+  hello(id: ID): [User]
+}
 
+type User {
   addUser(data: UserInput!): User
-  addTag(data: TagInput!): Tag
+}
 
+type Tag {
+  addTag(data: TagInput!): Tag
+}
+
+type Todo {
   addTodo(data: NewTodoInput!): Todo
   editTodo(data: EditTodoInput!): Todo
   deleteTodo(data: DeleteTodoInput!): Boolean!

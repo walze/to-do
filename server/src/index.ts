@@ -17,12 +17,22 @@ import { useConnection } from './helpers/useConnection'
 
 const resolvers: Resolvers = {
   Query: {
-    addUser,
+    // test end point
+    hello: useConnection(() => () => User.find())
+  },
+
+  Tag: {
+    addTag
+  },
+
+  User: {
+    addUser
+  },
+
+  Todo: {
     addTodo,
-    addTag,
     editTodo,
-    deleteTodo,
-    hello: useConnection(() => () => User.findOne({ where: { name: 'wivaer' } }) as Promise<User>)
+    deleteTodo
   }
 }
 
