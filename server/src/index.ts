@@ -18,18 +18,11 @@ import { useConnection } from './helpers/useConnection'
 const resolvers: Resolvers = {
   Query: {
     // test end point
-    hello: useConnection(() => () => User.find())
-  },
+    hello: useConnection(() => () => User.find()),
 
-  Tag: {
-    addTag
-  },
+    addTag,
+    addUser,
 
-  User: {
-    addUser
-  },
-
-  Todo: {
     addTodo,
     editTodo,
     deleteTodo
