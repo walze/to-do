@@ -4,7 +4,7 @@ import { pair } from 'ramda'
 import { snd, mapLeft } from './pairBifunctor'
 
 export const useConnection = <A, B>(
-  f: (conn: Connection) => (a: A) => B | Promise<B>,
+  f: (conn: Connection) => (a: A) => Promise<B>,
   getConnection = createConnection
 ) => async (a: A): Promise<B> => {
     const conn = getConnection()
