@@ -3,11 +3,12 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  Connection} from 'typeorm';
-import {pipe} from 'ramda';
+  Connection
+} from 'typeorm'
+import { pipe } from 'ramda'
 
-import {TagInput} from 'app/generated/graphql';
-import {saveEntity} from 'app/helpers/saveEntity';
+import { TagInput } from 'app/generated/graphql'
+import { saveEntity } from 'app/helpers/saveEntity'
 
 @Entity()
 export class Tag extends BaseEntity {
@@ -21,14 +22,13 @@ export class Tag extends BaseEntity {
     label!: string;
 }
 
-
 export const addTag = (conn: Connection) => pipe(
-    ({label, value}: TagInput) => {
-      const ntag = new Tag();
-      ntag.label = label;
-      ntag.value = value;
+  ({ label, value }: TagInput) => {
+    const ntag = new Tag()
+    ntag.label = label
+    ntag.value = value
 
-      return ntag;
-    },
-    saveEntity(conn),
-);
+    return ntag
+  },
+  saveEntity(conn)
+)

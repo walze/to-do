@@ -1,6 +1,6 @@
-import {Bifunctor2} from 'fp-ts/lib/Bifunctor';
+import { Bifunctor2 } from 'fp-ts/lib/Bifunctor'
 
-export const URI = 'Pair';
+export const URI = 'Pair'
 
 export type URI = typeof URI
 
@@ -41,9 +41,9 @@ class PairBifunctor implements Bifunctor2<URI> {
     f: (e: E) => G,
     g: (a: A) => B
   ) => Pair<G, B> = (fea, f, g) => {
-    const {mapLeft, mapRight} = PairBifunctor;
+    const { mapLeft, mapRight } = PairBifunctor
 
-    return mapRight(mapLeft(fea, f), g);
+    return mapRight(mapLeft(fea, f), g)
   };
 }
 
@@ -52,5 +52,5 @@ export const {
   mapLeft,
   mapRight,
   fst,
-  snd,
-} = PairBifunctor;
+  snd
+} = PairBifunctor

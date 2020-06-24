@@ -1,17 +1,17 @@
-import 'reflect-metadata';
+import 'reflect-metadata'
 
-import {addResolversToSchema} from '@graphql-tools/schema';
-import express from 'express';
-import graphqlHTTP from 'express-graphql';
-import schema from './schema';
+import { addResolversToSchema } from '@graphql-tools/schema'
+import express from 'express'
+import graphqlHTTP from 'express-graphql'
+import schema from './schema'
 
-import {Resolvers} from './generated/graphql';
+import { Resolvers } from './generated/graphql'
 
-import {addUser} from './resolvers/addUser';
-import {addTodo} from './resolvers/addTodo';
-import {addTag} from './resolvers/addTag';
-import {User} from './models/User';
-import {useConnection} from './helpers/useConnection';
+import { addUser } from './resolvers/addUser'
+import { addTodo } from './resolvers/addTodo'
+import { addTag } from './resolvers/addTag'
+import { User } from './models/User'
+import { useConnection } from './helpers/useConnection'
 
 const resolvers: Resolvers = {
   Query: {
@@ -19,20 +19,20 @@ const resolvers: Resolvers = {
     addTodo,
     addTag,
     hello: useConnection(
-        () => () => User.findOne({where: {name: 'wivaer'}}) as Promise<User>,
-    ),
-  },
-};
+      () => () => User.findOne({ where: { name: 'wivaer' } }) as Promise<User>
+    )
+  }
+}
 
-const app = express();
+const app = express()
 
 app.use(
-    graphqlHTTP({
-      schema: addResolversToSchema({schema, resolvers}),
-      graphiql: true,
-    }),
-);
+  graphqlHTTP({
+    schema: addResolversToSchema({ schema, resolvers }),
+    graphiql: true
+  })
+)
 
 app.listen(4000, () => {
-  console.info('Server listening on http://localhost:4000');
-});
+  console.info('Server listening on http://localhost:4000')
+})

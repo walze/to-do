@@ -3,26 +3,27 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  Connection} from 'typeorm';
+  Connection
+} from 'typeorm'
 
-import {pipe} from 'ramda';
-import {saveEntity} from 'app/helpers/saveEntity';
-import {UserInput} from 'app/generated/graphql';
+import { pipe } from 'ramda'
+import { saveEntity } from 'app/helpers/saveEntity'
+import { UserInput } from 'app/generated/graphql'
 @Entity()
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column({unique: true})
+    @Column({ unique: true })
     name!: string;
 }
 
 export const addUser = (conn: Connection) => pipe(
-    ({name}: UserInput) => {
-      const nuser = new User();
-      nuser.name = name;
+  ({ name }: UserInput) => {
+    const nuser = new User()
+    nuser.name = name
 
-      return nuser;
-    },
-    saveEntity(conn),
-);
+    return nuser
+  },
+  saveEntity(conn)
+)
