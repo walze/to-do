@@ -19,7 +19,7 @@ const resolvers: Resolvers = {
     addTodo,
     addTag,
     hello: useConnection(
-        () => () => User.findOne({where: {name: 'wivaer'}}),
+        () => () => User.findOne({where: {name: 'wivaer'}}) as Promise<User>,
     ),
   },
 };

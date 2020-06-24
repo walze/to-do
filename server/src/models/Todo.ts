@@ -5,10 +5,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  OneToOne,
   JoinColumn,
   OneToMany,
   Connection,
+  ManyToOne,
 } from 'typeorm';
 
 import {User, addUser} from './User';
@@ -34,7 +34,7 @@ export class Todo extends BaseEntity {
     @Column()
     updated_at!: Date;
 
-    @OneToOne(() => User)
+    @ManyToOne(() => User)
     @JoinColumn()
     user!: User;
 }
@@ -50,8 +50,8 @@ export const addTodo = (conn: Connection) => pipe(
 
       ntodo.user = user;
       ntodo.content = content;
-      ntodo.created_at = new Date();
-      ntodo.updated_at = new Date();
+      ntodo.created_at = (new Date()).toISOString() as unknown as Date;
+      ntodo.updated_at = (new Date()).toISOString() as unknown as Date;
 
       return ntodo;
     },

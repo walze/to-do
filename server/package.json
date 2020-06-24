@@ -10,7 +10,7 @@
       "build": "ts-node ./src -d ./dist --transforms typescript,imports",
       "gen": "graphql-codegen --config codegen.yml",
       "start": "ts-node src/index.ts",
-      "typeorm": "ts-node ./node_modules/.bin/typeorm",
+      "typeorm": "node -r tsconfig-paths/register -r ts-node/register ./node_modules/.bin/typeorm",
       "test": "eslint . --ext .ts,.tsx -c ./.eslintrc.json",
       "test-fix": "npm run test -- --fix"
    },

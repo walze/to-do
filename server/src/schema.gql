@@ -26,16 +26,16 @@ type Todo {
   id: Int!
   user: User!
   content: String!
-  created_at: Int!
-  updated_at: Int!
-  tags: [Tag]
+  created_at: String!
+  updated_at: String!
+  tags: [Tag]!
 }
 
 input TodoInput {
   user: UserInput!
   content: String!
-  created_at: Int
-  updated_at: Int
+  created_at: String
+  updated_at: String
   tags: [TagInput]
 }
 
