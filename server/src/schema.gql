@@ -36,7 +36,7 @@ input TodoInput {
   content: String!
   created_at: String
   updated_at: String
-  tags: [TagInput]
+  tags: [TagInput!]
 }
 
 type Query {

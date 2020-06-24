@@ -38,18 +38,18 @@ export class Todo extends BaseEntity {
 }
 
 export const addTodo = (conn: Connection) => pipe(
-  async ({ content, user: { name }, tags }: TodoInput) => {
+  async ({ content, user: { name }, tags: tagsInput }: TodoInput) => {
     const ntodo = new Todo()
+    const tags = tagsInput && await Tag.find({ where: tagsInput })
     const user = await User
-      .findOne({
-        where: { name }
-      }) || await addUser(conn)({ name })
+      .findOne({ where: { name } }) ||
+      await addUser(conn)({ name })
 
     ntodo.user = user
     ntodo.content = content
     ntodo.created_at = (new Date()).toISOString() as unknown as Date
     ntodo.updated_at = (new Date()).toISOString() as unknown as Date
-    ntodo.tags = (tags || []) as Tag[]
+    ntodo.tags = tags || []
 
     return ntodo
   },
