@@ -1,10 +1,4 @@
 {
-    "overrides": [{
-        "files": "./src/*",
-        "excludedFiles": [
-            "./src/generated"
-        ]
-    }],
     "env": {
         "es2020": true,
         "node": true
@@ -22,6 +16,7 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "semi": "off",
         "no-unused-vars": "off",
         "new-cap": "off",
         "require-jsdoc": "off"

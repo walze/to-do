@@ -5,7 +5,6 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  JoinColumn,
   OneToMany,
   Connection,
   ManyToOne,
@@ -26,7 +25,7 @@ export class Todo extends BaseEntity {
     content!: string;
 
     @OneToMany(() => Tag, (tag) => tag.id)
-    tags!: Tag[];
+    tags!: Array<Tag | null | undefined>;
 
     @Column()
     created_at!: Date;
@@ -35,13 +34,12 @@ export class Todo extends BaseEntity {
     updated_at!: Date;
 
     @ManyToOne(() => User)
-    @JoinColumn()
     user!: User;
 }
 
 
 export const addTodo = (conn: Connection) => pipe(
-    async ({content, user: {name}}: TodoInput) => {
+    async ({content, user: {name}, tags}: TodoInput) => {
       const ntodo = new Todo();
       const user = await User
           .findOne({
@@ -52,6 +50,7 @@ export const addTodo = (conn: Connection) => pipe(
       ntodo.content = content;
       ntodo.created_at = (new Date()).toISOString() as unknown as Date;
       ntodo.updated_at = (new Date()).toISOString() as unknown as Date;
+      ntodo.tags = (tags || []) as Tag[];
 
       return ntodo;
     },
