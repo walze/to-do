@@ -22,7 +22,7 @@ export class Tag extends BaseEntity {
     label!: string;
 }
 
-export const addTag = (conn: Connection) => pipe(
+export const createTag = (conn: Connection) => pipe(
   ({ label, value }: TagInput) => {
     const ntag = new Tag()
     ntag.label = label

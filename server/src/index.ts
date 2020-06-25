@@ -7,11 +7,11 @@ import schema from './schema'
 
 import { Resolvers } from './generated/graphql'
 
-import { addUser } from './resolvers/addUser'
-import { addTodo } from './resolvers/addTodo'
-import { editTodo } from './resolvers/editTodo'
+import { createUser } from './resolvers/createUser'
+import { createTodo } from './resolvers/createTodo'
+import { updateTodo } from './resolvers/updateTodo'
 import { deleteTodo } from './resolvers/deleteTodo'
-import { addTag } from './resolvers/addTag'
+import { createTag } from './resolvers/createTag'
 import { User } from './models/User'
 import { useConnection } from './helpers/useConnection'
 
@@ -20,11 +20,12 @@ const resolvers: Resolvers = {
     // test end point
     hello: useConnection(() => () => User.find()),
 
-    addTag,
-    addUser,
+    createTag,
 
-    addTodo,
-    editTodo,
+    createUser,
+
+    createTodo,
+    updateTodo,
     deleteTodo
   }
 }

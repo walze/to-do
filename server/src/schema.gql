@@ -44,7 +44,7 @@ input NewTodoInput {
   tags: [TagInput!]
 }
 
-input EditTodoInput {
+input UpdateTodoInput {
   id: Int!
   content: String!
   tags: [TagInput!]
@@ -60,10 +60,11 @@ input DeleteTodoInput {
 type Query {
   hello(id: ID): [User]
 
-  addUser(data: UserInput!): User
-  addTag(data: TagInput!): Tag
+  createUser(data: UserInput!): User
 
-  addTodo(data: NewTodoInput!): Todo
-  editTodo(data: EditTodoInput!): Todo
+  createTag(data: TagInput!): Tag
+
+  createTodo(data: NewTodoInput!): Todo
+  updateTodo(data: UpdateTodoInput!): Todo
   deleteTodo(data: DeleteTodoInput!): Boolean!
 }

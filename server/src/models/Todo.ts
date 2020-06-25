@@ -11,11 +11,11 @@ import {
   JoinTable
 } from 'typeorm'
 
-import { User, addUser } from './User'
+import { User, createUser } from './User'
 import { Tag } from './Tag'
 import { pipe, andThen } from 'ramda'
 import { saveEntity } from 'app/helpers/saveEntity'
-import { NewTodoInput, EditTodoInput, DeleteTodoInput } from 'app/generated/graphql'
+import { NewTodoInput, UpdateTodoInput, DeleteTodoInput } from 'app/generated/graphql'
 import assert from 'assert'
 
 @Entity()
@@ -40,13 +40,13 @@ export class Todo extends BaseEntity {
     user!: User;
 }
 
-export const addTodo = (conn: Connection) => pipe(
+export const createTodo = (conn: Connection) => pipe(
   async ({ content, user: { name }, tags: tagsInput }: NewTodoInput) => {
     const ntodo = new Todo()
     const tags = tagsInput && await Tag.find({ where: tagsInput })
     const user = await User
       .findOne({ where: { name } }) ||
-      await addUser(conn)({ name })
+      await createUser(conn)({ name })
 
     ntodo.user = user
     ntodo.content = content
@@ -59,8 +59,8 @@ export const addTodo = (conn: Connection) => pipe(
   andThen(saveEntity(conn))
 )
 
-export const editTodo = (conn: Connection) => pipe(
-  async ({ content, id, tags: tagsInput }: EditTodoInput) => {
+export const updateTodo = (conn: Connection) => pipe(
+  async ({ content, id, tags: tagsInput }: UpdateTodoInput) => {
     const todo = await Todo.findOne(id)
     assert(todo, 'todo not found')
 

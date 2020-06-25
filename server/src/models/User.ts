@@ -18,7 +18,7 @@ export class User extends BaseEntity {
     name!: string;
 }
 
-export const addUser = (conn: Connection) => pipe(
+export const createUser = (conn: Connection) => pipe(
   ({ name }: UserInput) => {
     const nuser = new User()
     nuser.name = name
