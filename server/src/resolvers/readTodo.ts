@@ -1,5 +1,5 @@
 import assert from 'assert'
-import { QueryResolvers, Todo as TodoQL, TagInput } from 'app/generated/graphql'
+import { QueryResolvers, Todo as TodoQL, CreateTagInput } from 'app/generated/graphql'
 
 // import { readTodo as readTodoDB } from '../models/Todo'
 import { useConnection } from 'app/helpers/useConnection'
@@ -14,7 +14,7 @@ export const readTodo: QueryResolvers['readTodo'] = async (_, { data }) => {
 
   const { user, tags, search } = data
 
-  const ts = tags?.filter(t => !!t.id) as DeepRequired<TagInput>[] | undefined
+  const ts = tags?.filter(t => !!t.id) as DeepRequired<CreateTagInput>[] | undefined
 
   return useConnection(c => () => c
     .todo
