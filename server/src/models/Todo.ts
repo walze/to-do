@@ -1,8 +1,9 @@
 /* eslint-disable camelcase */
 
-import { CreateTodoInput, DeleteInput } from 'app/generated/graphql'
+import { CreateTodoInput, ReadTodoInput, CreateTagInput, IdInput } from 'app/generated/graphql'
 
 import { Prisma } from 'app/helpers/useConnection'
+import { DeepRequired } from 'app/types'
 
 export const upsertTodo = (conn: Prisma) =>
   async ({ content, user: { name }, tags: tagsInput, title, id }: CreateTodoInput) => {
@@ -40,8 +41,30 @@ export const upsertTodo = (conn: Prisma) =>
   }
 
 export const deleteTodo = (conn: Prisma) =>
-  async ({ id }: DeleteInput) => {
+  async ({ id }: IdInput) => {
     const todo = await conn.user.delete({ where: { id } })
 
     return todo.id === id
+  }
+
+export const readTodo = (c: Prisma) =>
+  ({ user, tags, search }: ReadTodoInput) => {
+    const ts = tags?.filter(t => !!t.id) as DeepRequired<CreateTagInput>[] | undefined
+
+    return c
+      .todo
+      .findMany({
+        include: {
+          tags: true,
+          user: true
+        },
+        where: {
+          user: { id: user },
+          OR: [
+            { title: { contains: search || undefined } },
+            { content: { contains: search || undefined } }
+          ],
+          tags: ts && { some: { OR: ts } }
+        }
+      })
   }
