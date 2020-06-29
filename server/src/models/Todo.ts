@@ -50,6 +50,7 @@ export const deleteTodo = (conn: Prisma) =>
 export const readTodo = (c: Prisma) =>
   ({ user, tags, search }: ReadTodoInput) => {
     const ts = tags?.filter(t => !!t.id) as DeepRequired<CreateTagInput>[] | undefined
+    const contains = search || undefined
 
     return c
       .todo
@@ -61,8 +62,8 @@ export const readTodo = (c: Prisma) =>
         where: {
           user: { id: user },
           OR: [
-            { title: { contains: search || undefined } },
-            { content: { contains: search || undefined } }
+            { title: { contains } },
+            { content: { contains } }
           ],
           tags: ts && { some: { OR: ts } }
         }
