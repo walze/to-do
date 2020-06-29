@@ -1,9 +1,9 @@
 
-import { TagInput, DeleteInput } from 'app/generated/graphql'
+import { CreateTagInput, IdInput } from 'app/generated/graphql'
 import { Prisma } from 'app/helpers/useConnection'
 
 export const createTag = (p: Prisma) =>
-  ({ label, value }: TagInput) => p
+  ({ label, value }: CreateTagInput) => p
     .tag
     .create({
       data: {
@@ -13,7 +13,7 @@ export const createTag = (p: Prisma) =>
     })
 
 export const deleteTag = (p: Prisma) =>
-  ({ id }: DeleteInput) => p
+  ({ id }: IdInput) => p
     .tag
     .delete({
       where: { id }
