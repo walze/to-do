@@ -1,34 +1,20 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  BaseEntity,
-  Connection
-} from 'typeorm'
-import { pipe } from 'ramda'
 
-import { TagInput } from 'app/generated/graphql'
-import { saveEntity } from 'app/helpers/saveEntity'
+import { TagInput, DeleteInput } from 'app/generated/graphql'
+import { Prisma } from 'app/helpers/useConnection'
 
-@Entity()
-export class Tag extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id!: number;
+export const createTag = (p: Prisma) =>
+  ({ label, value }: TagInput) => p
+    .tag
+    .create({
+      data: {
+        label,
+        value
+      }
+    })
 
-    @Column()
-    value!: string;
-
-    @Column()
-    label!: string;
-}
-
-export const createTag = (conn: Connection) => pipe(
-  ({ label, value }: TagInput) => {
-    const ntag = new Tag()
-    ntag.label = label
-    ntag.value = value
-
-    return ntag
-  },
-  saveEntity(conn)
-)
+export const deleteTag = (p: Prisma) =>
+  ({ id }: DeleteInput) => p
+    .tag
+    .delete({
+      where: { id }
+    })

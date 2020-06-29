@@ -16,6 +16,7 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "curly": "off",
         "semi": "error",
         "no-unused-vars": "off",
         "new-cap": "off",

@@ -1,22 +1,20 @@
-import { createConnection, Connection } from 'typeorm'
 
-import { pair } from 'ramda'
-import { snd, mapLeft } from './pairBifunctor'
+import { tap } from 'ramda'
+
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+export type Prisma = typeof prisma
 
 export const useConnection = <A, B>(
-  f: (conn: Connection) => (a: A) => Promise<B>,
-  getConnection = createConnection
-) => async (a: A): Promise<B> => {
-    const conn = getConnection()
-
-    return conn
-      .then((c) => pair(c, f(c)(a)))
-      .then((p) => Promise.all(p))
-      .then((p) => mapLeft(p, (c) => c.close()))
-      .then(snd)
+  f: (conn: typeof prisma) => (a: A) => Promise<B>
+) => async (a: A): Promise<B> =>
+    prisma
+      .connect()
+      .then(() => f(prisma)(a))
+      .then(tap(() => prisma.disconnect()))
       .catch(async (error) => {
-        (await conn).close()
+        prisma.disconnect()
 
         throw error
       })
-  }

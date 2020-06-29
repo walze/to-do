@@ -1,85 +1,47 @@
 /* eslint-disable camelcase */
 
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  BaseEntity,
-  Connection,
-  ManyToOne,
-  ManyToMany,
-  JoinTable
-} from 'typeorm'
+import { CreateTodoInput, DeleteInput } from 'app/generated/graphql'
 
-import { User, createUser } from './User'
-import { Tag } from './Tag'
-import { pipe, andThen } from 'ramda'
-import { saveEntity } from 'app/helpers/saveEntity'
-import { NewTodoInput, UpdateTodoInput, DeleteTodoInput } from 'app/generated/graphql'
-import assert from 'assert'
+import { Prisma } from 'app/helpers/useConnection'
 
-@Entity()
-export class Todo extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id!: number;
+export const upsertTodo = (conn: Prisma) =>
+  async ({ content, user: { name }, tags: tagsInput, title, id }: CreateTodoInput) => {
+    const tagConnect = id
+      ? tagsInput?.map(({ id }) => ({ id: id as number }))
+      : undefined
 
-    @Column()
-    content!: string;
+    const include = {
+      tags: true,
+      user: true
+    }
 
-    @ManyToMany(() => Tag, (tag) => tag.id)
-    @JoinTable()
-    tags!: Tag[];
+    return !id
+      ? conn.todo
+        .create({
+          include,
+          data: {
+            title,
+            content,
+            user: { connect: { name } },
+            tags: { connect: tagConnect }
+          }
+        })
+      : conn.todo
+        .update({
+          include,
+          where: { id },
+          data: {
+            title,
+            content,
+            tags: { connect: tagConnect },
+            updated_at: new Date()
+          }
+        })
+  }
 
-    @Column()
-    created_at!: Date;
+export const deleteTodo = (conn: Prisma) =>
+  async ({ id }: DeleteInput) => {
+    const todo = await conn.user.delete({ where: { id } })
 
-    @Column()
-    updated_at!: Date;
-
-    @ManyToOne(() => User)
-    user!: User;
-}
-
-export const createTodo = (conn: Connection) => pipe(
-  async ({ content, user: { name }, tags: tagsInput }: NewTodoInput) => {
-    const ntodo = new Todo()
-    const tags = tagsInput && await Tag.find({ where: tagsInput })
-    const user = await User
-      .findOne({ where: { name } }) ||
-      await createUser(conn)({ name })
-
-    ntodo.user = user
-    ntodo.content = content
-    ntodo.created_at = (new Date()).toISOString() as unknown as Date
-    ntodo.updated_at = (new Date()).toISOString() as unknown as Date
-    ntodo.tags = tags || []
-
-    return ntodo
-  },
-  andThen(saveEntity(conn))
-)
-
-export const updateTodo = (conn: Connection) => pipe(
-  async ({ content, id, tags: tagsInput }: UpdateTodoInput) => {
-    const todo = await Todo.findOne(id)
-    assert(todo, 'todo not found')
-
-    const tags = tagsInput && await Tag.find({ where: tagsInput })
-
-    todo.content = content
-    todo.updated_at = (new Date()).toISOString() as unknown as Date
-    todo.tags = tags || []
-
-    return todo
-  },
-  andThen(saveEntity(conn))
-)
-
-export const deleteTodo = (conn: Connection) => pipe(
-  async ({ id }: DeleteTodoInput) => {
-    const todo = await Todo.delete(id)
-
-    return Number(todo.affected) > 0
-  },
-  andThen(saveEntity(conn))
-)
+    return todo.id === id
+  }

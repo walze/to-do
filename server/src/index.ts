@@ -7,25 +7,29 @@ import schema from './schema'
 
 import { Resolvers } from './generated/graphql'
 
-import { createUser } from './resolvers/createUser'
-import { createTodo } from './resolvers/createTodo'
-import { updateTodo } from './resolvers/updateTodo'
+import { upsertTodo } from './resolvers/upsertTodo'
+import { readTodo } from './resolvers/readTodo'
 import { deleteTodo } from './resolvers/deleteTodo'
+
+import { createUser } from './resolvers/createUser'
+
 import { createTag } from './resolvers/createTag'
-import { User } from './models/User'
+
 import { useConnection } from './helpers/useConnection'
+import { tap } from 'ramda'
 
 const resolvers: Resolvers = {
   Query: {
     // test end point
-    hello: useConnection(() => () => User.find()),
+    hello: useConnection(p => () => p.user.findMany()),
 
     createTag,
 
     createUser,
 
-    createTodo,
-    updateTodo,
+    createTodo: upsertTodo,
+    readTodo,
+    updateTodo: upsertTodo,
     deleteTodo
   }
 }
@@ -35,7 +39,9 @@ const app = express()
 app.use(
   graphqlHTTP({
     schema: addResolversToSchema({ schema, resolvers }),
-    graphiql: true
+    graphiql: true,
+    pretty: true,
+    customFormatErrorFn: tap(console.error)
   })
 )
 

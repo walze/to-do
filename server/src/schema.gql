@@ -19,7 +19,7 @@ type Tag {
   label: String!
 }
 
-input TagInput {
+input CreateTagInput {
   id: Int
   value: String!
   label: String!
@@ -32,25 +32,28 @@ input TagInput {
 type Todo {
   id: Int!
   user: User!
+  title: String!
   content: String!
   created_at: String!
   updated_at: String!
   tags: [Tag]!
 }
 
-input NewTodoInput {
+input ReadTodoInput {
+  user: Int!
+  search: String
+  tags: [IDInput!]
+}
+
+input CreateTodoInput {
+  id: Int
   user: UserInput!
+  title: String!
   content: String!
-  tags: [TagInput!]
+  tags: [CreateTagInput!]
 }
 
-input UpdateTodoInput {
-  id: Int!
-  content: String!
-  tags: [TagInput!]
-}
-
-input DeleteTodoInput {
+input IDInput {
   id: Int!
 }
 # END TODO
@@ -62,9 +65,11 @@ type Query {
 
   createUser(data: UserInput!): User
 
-  createTag(data: TagInput!): Tag
+  createTag(data: CreateTagInput!): Tag
+  deleteTag(data: IDInput!): Boolean!
 
-  createTodo(data: NewTodoInput!): Todo
-  updateTodo(data: UpdateTodoInput!): Todo
-  deleteTodo(data: DeleteTodoInput!): Boolean!
+  createTodo(data: CreateTodoInput!): Todo
+  readTodo(data: ReadTodoInput!): [Todo]!
+  updateTodo(data: CreateTodoInput!): Todo
+  deleteTodo(data: IDInput!): Boolean!
 }

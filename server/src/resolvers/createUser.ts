@@ -5,7 +5,7 @@ import { QueryResolvers } from '../generated/graphql'
 import { useConnection } from 'app/helpers/useConnection'
 
 export const createUser: QueryResolvers['createUser'] = async (_, { data }) => {
-  assert(data && data.name, 'no name provided')
+  assert(data?.name, 'no name provided')
 
   return useConnection(createUserDB)({ name: data.name })
 }
