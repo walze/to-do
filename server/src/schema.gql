@@ -24,6 +24,10 @@ input CreateTagInput {
   value: String!
   label: String!
 }
+
+input ReadTagInput {
+  search: String
+}
 # END TAG
 
 
@@ -66,6 +70,7 @@ type Query {
   createUser(data: UserInput!): User
 
   createTag(data: CreateTagInput!): Tag
+  readTag(data: ReadTagInput!): [Tag]!
   deleteTag(data: IDInput!): Boolean!
 
   createTodo(data: CreateTodoInput!): Todo

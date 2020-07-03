@@ -13,16 +13,16 @@ services:
       - "4000:4000"
     volumes:
       - ./:/app
-    depends_on: 
-      - db
+  #   depends_on: 
+  #     - db
 
-  db:
-    restart: always
-    image: mysql:latest
-    command: --default-authentication-plugin=mysql_native_password
-    environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
-      MYSQL_DATABASE: 'database'
-    ports:
-      - "3306:3306"
+  # db:
+  #   restart: always
+  #   image: mysql:latest
+  #   command: --default-authentication-plugin=mysql_native_password
+  #   environment:
+  #     MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+  #     MYSQL_DATABASE: 'database'
+  #   ports:
+  #     - "3306:3306"
       
