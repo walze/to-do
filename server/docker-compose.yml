@@ -7,8 +7,8 @@ services:
       context: ./
       dockerfile: ./docker/app.dockerfile
       args:
-        environment: development
-        script: dev
+        NODE_ENV: production
+        SCRIPT: start
     ports:
       - "4000:4000"
     volumes:

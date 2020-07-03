@@ -46,5 +46,9 @@ app.use(
 )
 
 app.listen(4000, () => {
-  console.info('Server listening on http://localhost:4000')
+  console.info(
+    'Server listening on http://localhost:4000',
+    process.env.NODE_ENV,
+    process.env.SCRIPT
+  )
 })

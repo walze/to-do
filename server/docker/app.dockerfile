@@ -1,10 +1,10 @@
 FROM node:14
 
-ARG environment
-ARG script
+ARG NODE_ENV
+ARG SCRIPT
 
-ENV environment ${environment}
-ENV script ${script}
+ENV NODE_ENV ${NODE_ENV}
+ENV SCRIPT ${SCRIPT}
 
 WORKDIR /app
 
@@ -12,7 +12,8 @@ COPY . .
 
 RUN npm i
 RUN npm run gen
+RUN npx prisma generate
 
 EXPOSE 4000
 
-CMD npm run ${script} --NODE_ENV=${environment}
+CMD npm run ${SCRIPT} --NODE_ENV=${NODE_ENV}
