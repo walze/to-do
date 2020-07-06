@@ -3,7 +3,6 @@ orbs:
   node: circleci/node@1.1.6
 jobs:
   build-and-test:
-    working_directory: $CIRCLE_WORKING_DIRECTORY/server
     executor:
       name: node/default
     steps:
@@ -11,6 +10,7 @@ jobs:
       - node/with-cache:
           steps:
             - run: |
+                cd server &&
                 sh ./scripts/push.sh
 workflows:
     build-and-test:
