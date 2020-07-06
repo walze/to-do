@@ -3,16 +3,17 @@ orbs:
   node: circleci/node@1.1.6
 jobs:
   build-and-test:
-    executor:
-      name: node/default
+    docker:
+      - image: circleci/buildpack-deps:stretch
     steps:
       - checkout
-      - docker:
-          steps:
-            - run: |
-                cd server &&
-                sh ./scripts/push.sh
+      - setup_remote_docker
+      - run:
+          name: Build Docker image
+          command: |
+            cd server &&
+            sh ./scripts/push.sh
 workflows:
-    build-and-test:
-      jobs:
-        - build-and-test
+  build-and-test:
+    jobs:
+      - build-and-test
