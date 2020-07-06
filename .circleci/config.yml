@@ -3,7 +3,7 @@ orbs:
   node: circleci/node@1.1.6
 jobs:
   build-and-test:
-    working_directory: ./server
+    working_directory: $CIRCLE_WORKING_DIRECTORY/server
     executor:
       name: node/default
     steps:
