@@ -10,9 +10,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: Build Docker image
-          command: |
-            cd server &&
-            sh ./scripts/push.sh
+          command: sh ./scripts/push.sh
 workflows:
   build-push:
     jobs:
