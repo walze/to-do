@@ -12,8 +12,7 @@ COPY . .
 
 RUN npm i
 RUN npm run gen
-RUN npx prisma generate
 
-EXPOSE 4000
+EXPOSE 1234
 
 CMD npm run ${SCRIPT} --NODE_ENV=${NODE_ENV}
