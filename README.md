@@ -1,7 +1,13 @@
-# Awesome Project Build with TypeORM
+# To-Do App API
 
-Steps to run this project:
+Technologies used:
 
-1. Run `npm i` command
-2. Setup database settings inside `ormconfig.json` file
-3. Run `npm start` command
+- Typescript
+- GraphQL
+- Apollo
+- Prisma
+
+CI/CD using:
+
+- Kubernetes / Kubesail for deployment
+- CircleCI for image building
