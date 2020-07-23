@@ -1,6 +1,8 @@
 # To-Do App
 
-Just a simple project to test technologies, show my skills and update my portfolio. Client and Server are in distinct branches.
+Just a simple project to test technologies, show my skills and update my portfolio.
+
+Client and Server are in distinct branches.
 
 ## Client (WIP)
 
