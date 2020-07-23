@@ -1,9 +1,0 @@
-{
-  "verbose": true,
-  "watch": ["src/*"],
-  "execMap": {
-    "gql": "npm run gen",
-    "ts": "npm run start"
-  },
-  "ext": "ts,tsx,gql,graphql"
-}
